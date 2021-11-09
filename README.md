@@ -6,6 +6,7 @@
 - Plotly
 - Cartopy (see conda install script, easiest install method)
 - Pandas
+- PyCountry
 - Probably others, but these packages should have them as dependancies 
 
 Data can be fetched from 
