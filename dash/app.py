@@ -29,7 +29,10 @@ for x,y,z in [get_lines(g) for g in [cf.COASTLINE.geometries, cf.BORDERS.geometr
 width = 1000
 height = 1000
 fig.update_layout(width=int(width), height=int(height))
+fig.update_scenes(xaxis_visible=False, yaxis_visible=False,zaxis_visible=False )
+
 fig.write_html(buffer)
+fig.write_html('index.html')
 
 html_bytes = buffer.getvalue().encode()
 encoded = b64encode(html_bytes).decode()
