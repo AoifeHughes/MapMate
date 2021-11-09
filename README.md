@@ -14,3 +14,4 @@ Data can be fetched from
 ```
 https://www.kaggle.com/berkeleyearth/climate-change-earth-surface-temperature-data/version/2
 ``` 
+put it in the data folder or things won't quite work
