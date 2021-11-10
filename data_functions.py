@@ -50,9 +50,8 @@ def find_nearest(array, value):
     idx = (np.linalg.norm(array - value, axis=1)).argmin()
     return idx
 
-def create_spherical_heatmap_vals(xyzv):
+def create_spherical_heatmap_vals(xyzv, num_samples=200):
 
-    num_samples = 200
     u = np.linspace( 0, 2 * np.pi, num_samples)
     v = np.linspace( 0, np.pi, num_samples)
     # create the sphere surface
@@ -79,5 +78,5 @@ def get_lines(geoms):
     for coord_seq in geoms(): #e.g. cf.BORDERS.geometries()
         x_coords.extend([k[0] for k in coord_seq.coords] + [np.nan])
         y_coords.extend([k[1] for k in coord_seq.coords] + [np.nan])
-    x2, y2, z2 = mapping_map_to_sphere(x_coords, y_coords, 1.01)
+    x2, y2, z2 = mapping_map_to_sphere(x_coords, y_coords, 1.001)
     return x2, y2, z2
