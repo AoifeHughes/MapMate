@@ -20,22 +20,27 @@ def mapping_map_to_sphere(lon, lat, radius=1):
     zs=radius*sin(lat)
     return xs, ys, zs
 
-
+from pandas.api.types import is_numeric_dtype
 def process_df(df, groupbyLst, lat, long, date=None, date_var = None):
 
     # crop to date region if required
     if date is not None:
         df = df[df[date_var] == date]
     #check if directions in data
-    df[long] = [float(v[:-1])*(1 if v[-1] in ['N', 'E'] else -1) for v in df[long]]
-    df[lat] = [float(v[:-1])*(1 if v[-1] in ['N', 'E'] else -1) for v in df[lat]]
+
+    if not is_numeric_dtype(df[long]):
+        df[long] = [float(v[:-1])*(1 if v[-1] in ['N', 'E'] else -1) for v in df[long]]
+    if not is_numeric_dtype(df[lat]):
+        df[lat] = [float(v[:-1])*(1 if v[-1] in ['N', 'E'] else -1) for v in df[lat]]
 
     xs, ys, zs = mapping_map_to_sphere(df[long], df[lat])
     df['X'] = xs
     df['Y'] = ys
     df['Z'] = zs
-    tdf = df.groupby([lat, long, *groupbyLst, 'X','Y','Z']).mean().reset_index()
-    return tdf
+    if groupbyLst is not None:
+        tdf = df.groupby([lat, long, *groupbyLst, 'X','Y','Z']).mean().reset_index()
+        return tdf
+    return df
 
 def get_XYZV(df, var):
     return df[['X','Y','Z', var]].values

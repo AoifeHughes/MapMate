@@ -5,6 +5,7 @@
 - Numpy
 - Plotly
 - Cartopy (see conda install script, easiest install method)
+- netcdf4 (see conda install script)
 - Pandas
 - PyCountry
 - Probably others, but these packages should have them as dependancies 
