@@ -1,9 +1,9 @@
 import plotly.graph_objects as go
 
 
-def make_choro(tdf, data_col, cname, ccodes, cbar_name, cbar_suffix=''):
+def make_choro(tdf, data_col, cname, ccodes, cbar_name, cbar_suffix='', visable=True):
     return go.Choropleth(
-            visible=False,
+            visible=visable,
             locations = tdf[ccodes],
             z = tdf[data_col],
             text = tdf[cname],
@@ -19,17 +19,14 @@ def make_choro(tdf, data_col, cname, ccodes, cbar_name, cbar_suffix=''):
 def create_plot(tdf, data_col, cname, ccodes, cbar_name, cbar_suffix='', projection='equirectangular'):
     plot = make_choro(tdf, data_col, cname, ccodes, cbar_name, cbar_suffix)
     fig = go.Figure(data=[plot])
-
     geo=dict(
         showframe=False,
         showcoastlines=False,
         projection_type=projection
     )
-
     fig.update_layout(
         geo=geo
     )
-
     return fig
 
 def create_slider_plot(tdf, slider_col, data_col, cname, ccodes, cbar_name, cbar_suffix='', slide_title_prefix='', projection='equirectangular'): 
@@ -40,7 +37,7 @@ def create_slider_plot(tdf, slider_col, data_col, cname, ccodes, cbar_name, cbar
     for year in slides:
         ttdf = tdf[tdf[slider_col] == year]
 
-        slides_sliders.append(make_choro(ttdf, data_col, cname, ccodes, cbar_name, cbar_suffix))
+        slides_sliders.append(make_choro(ttdf, data_col, cname, ccodes, cbar_name, cbar_suffix, visable=False))
 
     fig = go.Figure(data=slides_sliders)
 
