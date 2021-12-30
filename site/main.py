@@ -35,49 +35,7 @@ def get_uploaded_file_as_df():
 @app.route("/", defaults={'path': ''}, methods=['GET', 'POST'])
 @app.route('/<path:path>', methods=['GET', 'POST'])
 def index(path):
-    #exps = get_experiments()
     return render_template('index.html')
-
-
-# @app.route("/new_experiment",  methods=['GET', 'POST'])
-# def new_experiment():
-#     resp = None
-#     if request.method == 'POST':
-#         resp, df = get_uploaded_file_as_df()
-#         if resp:
-#             resp = create_new_experiment(df, owner=session['username'][:3])
-#     return render_template('new_experiment.html',
-#                            resp=resp)
-
-
-# @app.route("/data")
-# def data():
-#     exp = request.args.get("experiment")
-#     data_type = request.args.get("type")
-#     if 'end' in data_type.lower():
-#         end_experiment(exp)
-#     df = get_all_water_data(
-#         exp) if 'water' in data_type.lower() else get_all_balance_data(exp)
-#     resp = make_response(df.to_csv())
-#     resp.headers["Content-Disposition"] = "attachment; filename=export.csv"
-#     resp.headers["Content-Type"] = "text/csv"
-#     return resp
-
-
-# @app.route("/experiment", methods=['GET', 'POST'])
-# def view_experiment():
-#     resp = None
-#     exp = request.args.get("experiment")
-#     plants_df = get_experiment_plants(exp)
-#     if request.method == 'POST':
-#         resp, df = get_uploaded_file_as_df()
-#         if resp:
-#             resp = update_target_weights(df)
-#     return render_template('experiment.html',
-#                            experiment=exp,
-#                            error=resp,
-#                            plants=plants_df)
-
 
 if __name__ == "__main__":
     app.secret_key = '8080'
