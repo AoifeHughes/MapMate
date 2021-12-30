@@ -7,7 +7,7 @@ def prepare_data(loc, data_col, cname_cols, long_col='Longitude', lat_col='Latit
     """
         Prepares a data file for use in this library 
         
-        loc = data location on disk
+        loc = data location on disk, or df
         data_col = the value to map
         cname_cols = country/groupby columns
 
@@ -19,8 +19,10 @@ def prepare_data(loc, data_col, cname_cols, long_col='Longitude', lat_col='Latit
 
 
     """
-
-    df = pd.read_csv(loc, nrows=nrows)
+    if type(loc) == str:
+        df = pd.read_csv(loc, nrows=nrows)
+    else:
+        df = loc[:nrows] if nrows is not None else loc
     df = df[df[data_col].notna()]
     for f in col_mods:
         f(df)

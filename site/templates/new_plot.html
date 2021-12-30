@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/styles/general.css">
+</head>
+
+<body>
+    {% if resp %}
+    <h2>
+        <font color="red">{{ "{0}".format(resp) }}</font>
+    </h2>
+    {% endif %}
+    <h1>New Plot</h1>
+
+    <table>
+        <tr>
+            <td>
+                <form name="upload" method="post" enctype="multipart/form-data" action="">
+
+                    <label>Country Column
+                        <input type="text" name="ccol" value="Country">
+                    </label>
+                    <br>
+                    <label>Data Column
+                        <input type="text" name="dcol" value="AverageTemperature">
+                    </label>
+                    <br>
+                    <label>Project in 3D?
+                        <input type="checkbox" name="proj3D">
+                    </label>
+                    <br>
+                    <input type=file name=file>
+                    <input type=submit value=Upload>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+</body>
+
+</html>

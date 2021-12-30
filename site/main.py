@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash, make_response
 from functools import wraps
+from flask.templating import render_template_string
 import pandas as pd
 app = Flask(__name__)
 
@@ -36,6 +37,24 @@ def get_uploaded_file_as_df():
 @app.route('/<path:path>', methods=['GET', 'POST'])
 def index(path):
     return render_template('index.html')
+
+
+@app.route("/new_plot",  methods=['GET', 'POST'])
+def new_plot():
+    from MapMate.mm_data import prepare_data
+    from MapMate.mm_plot import create_plot
+
+    resp = None
+    if request.method == 'POST':
+        resp, df = get_uploaded_file_as_df()
+        if resp:
+            ccol = [str(request.form['ccol'])]
+            dcol = str(request.form['dcol'])
+            proj = False#bool(request.form['proj3D'])
+            df = prepare_data(df, dcol, ccol)
+            fig = create_plot(df, dcol, ccol, 'codes', 'Temperature',projection=('equirectangular' if proj is False else 'orthographic'))
+        return render_template_string(fig.to_html())
+    return render_template('new_plot.html')
 
 if __name__ == "__main__":
     app.secret_key = '8080'
