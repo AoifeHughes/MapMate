@@ -12,6 +12,7 @@ setup(name='MapMate',
                         'pandas',
                         'pycountry',
                         'plotly',
-                        'tqdm'],
+                        'tqdm',
+			      'flask'],
       
       zip_safe=True)
